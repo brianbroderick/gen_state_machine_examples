@@ -3,7 +3,7 @@ defmodule Switch do
   Example module for a gen state machine
 
   To call:
-  {:ok, pid} = GenStateMachine.start_link(Switch, {:off, 0})
+  {:ok, pid} = Switch.start_link
   GenStateMachine.cast(pid, :flip)
   """
 
