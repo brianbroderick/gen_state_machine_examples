@@ -20,6 +20,15 @@ defmodule Door do
     GenStateMachine.start_link(__MODULE__, [])
   end
 
+  @doc """
+  All of these functions follow this pattern:
+
+  def current_state(cast_or_call, event, data) do
+
+  cast is async, call is sync. They aren't universally
+  interchangeable because there are different params you can pass
+  to each for example, you can get a reply when using call.
+  """
   def open(:cast, :close, data) do
     IO.puts "Door closed."
     {:next_state, :closed, data}
