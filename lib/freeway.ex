@@ -2,55 +2,61 @@ defmodule Freeway do
   @moduledoc """
   Example module for a
   gen state machine representing a freeway.
+  On this freeway, there's a special lane for cars and another one for trucks.
+
+  To call:
+  {:ok, pid} = Freeway.start_link
+  GenStateMachine.cast(pid, {:enter, %Vehicle{}})
   """
 
   use GenStateMachine, callback_mode: :state_functions
 
+  defstruct car: [], truck: []
+
   def init(_) do
-    {:ok, :closed, 0}
+    {:ok, :road, %Freeway{}}
   end
 
   def start_link do
     GenStateMachine.start_link(__MODULE__, [])
   end
-end
 
-defmodule Truck do
-  @moduledoc """
-  A type of vehicle on the Freeway
-  """
+  def road(:cast, {:enter, vehicle}, data) do
+    data = case vehicle_type(vehicle) do
+          "car" -> %{data | car: [vehicle | data.car]}
+          "truck" -> %{data | truck: [vehicle | data.truck]}
+          _ -> IO.puts "Unknown vehicle type"; data
+    end
+    IO.inspect data
 
-  defstruct decoded_key: "1fmzu67e92uc29655",
-            decoded_value: %{
-              "object_type" => "Truck",
-              "current_value" => %{
-                "color" => "white",
-                "make" => "Ford",
-                "model" => "F150",
-                "year" => "2018",
-                "mileage" => "6543",
-                "inserted_at" => 1516746431685129000,
-                "vin" => "1fmzu67e92uc29655"
+    {:keep_state, data}
+  end
+
+  defp vehicle_type(vehicle) do
+    vehicle.decoded_value["object_type"]
+  end
+
+  def car do
+    %Vehicle{}
+  end
+
+  def truck do
+    %Vehicle{ decoded_key: "1fmzu67e92uc29655",
+              decoded_value: %{
+                "object_type" => "truck",
+                "current_value" => %{
+                  "color" => "white",
+                  "make" => "Ford",
+                  "model" => "F150",
+                  "year" => "2018",
+                  "mileage" => "6543",
+                  "inserted_at" => 1516746431685129000,
+                  "vin" => "1fmzu67e92uc29655"
+                }
               }
             }
+  end
 end
 
-defmodule Car do
-  @moduledoc """
-  A type of vehicle on the Freeway
-  """
 
-  defstruct decoded_key: "adb1240236b102231",
-            decoded_value: %{
-              "object_type" => "Car",
-              "current_value" => %{
-                "color" => "silver",
-                "make" => "Mercedes-Benz",
-                "model" => "E-Class",
-                "year" => "2006",
-                "mileage" => "104538",
-                "inserted_at" => 1516746431574019000,
-                "vin" => "adb1240236b102231"
-              }
-            }
-end
+
