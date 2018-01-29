@@ -1,21 +1,7 @@
 # GenStateMachineExamples
 
-**TODO: Add description**
+Erlang's gen_statem is a powerful, yet arguably complicated, library that implements a state machine. Gen_state_machine is an Elixir package that wraps gen_statem.  
 
-## Installation
+This repo consists of a few examples using gen_state_machine.  Currently, it has an example of a switch, a door, and a metered freeway on ramp. 
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `gen_state_machine_examples` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:gen_state_machine_examples, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/gen_state_machine_examples](https://hexdocs.pm/gen_state_machine_examples).
-
+The on ramp is the closest to a real world implementation. You can think of it as a metaphor for a stream process that batches data by size or time to be sent to a downstream process (i.e. cars entering the freeway when the light turns green)
