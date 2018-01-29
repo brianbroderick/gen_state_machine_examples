@@ -17,20 +17,3 @@ defmodule Vehicle do
               }
             }
 end
-
-# def truck do
-#   %Vehicle{ decoded_key: "1fmzu67e92uc29655",
-#             decoded_value: %{
-#               "object_type" => "truck",
-#               "current_value" => %{
-#                 "color" => "white",
-#                 "make" => "Ford",
-#                 "model" => "F150",
-#                 "year" => "2018",
-#                 "mileage" => "6543",
-#                 "inserted_at" => 1516746431685129000,
-#                 "vin" => "1fmzu67e92uc29655"
-#               }
-#             }
-#           }
-# end

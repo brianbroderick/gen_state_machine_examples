@@ -12,9 +12,9 @@ defmodule Freeway do
 
   @doc """
   Passing a list with :state_functions and :state_enter means it will also fire an
-  :enter event.
+  :enter event. For example:
+  use GenStateMachine, callback_mode: [:state_functions, :state_enter]
   """
-  # use GenStateMachine, callback_mode: [:state_functions, :state_enter]
   use GenStateMachine, callback_mode: :state_functions
 
   def init(_) do
@@ -51,7 +51,7 @@ defmodule Freeway do
   end
 
   def enter_freeway(data) do
-    ### In a real example, you'd likely send the data list somewhere to be processed
+    # In a real environment, you'd likely send the data list somewhere to be processed
     {count, data} = {length(data), []}
     IO.puts "#{to_string(count)} cars are entering the freeway."
     data
